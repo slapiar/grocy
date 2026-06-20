@@ -10,12 +10,19 @@ Your work demonstrates not only technical excellence but also a deeper vision: e
 
 ## Slovak Localization Contribution
 
-I have prepared a **complete Slovak localization** for Grocy, including:
-- ✅ **All 4 main translation files** fully translated and proofread
-  - `strings.po` (UI strings) - 229 entries completed
-  - `locales.po` (Language names) - 8 entries completed  
-  - `userfield_types.po` (Custom field types) - 1 entry completed
-  - Plus additional support files
+I have prepared a **complete Slovak localization** for Grocy, covering **all 9 translation files** — a total of **994 translated entries**:
+
+| File | Entries | Description |
+|---|---|---|
+| `strings.po` | 768 | Main UI strings |
+| `demo_data.po` | 117 | Demo data labels |
+| `locales.po` | 34 | Language names |
+| `permissions.po` | 31 | Permission descriptions |
+| `chore_period_types.po` | 8 | Chore period types |
+| `chore_assignment_types.po` | 5 | Chore assignment types |
+| `component_translations.po` | 6 | Component strings |
+| `stock_transaction_types.po` | 10 | Stock transaction types |
+| `userfield_types.po` | 15 | Custom field types |
 
 The translation has been done with care for Slovak language idioms and cultural appropriateness, ensuring natural, professional communication in the user interface.
 
