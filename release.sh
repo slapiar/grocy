@@ -134,10 +134,10 @@ if ! [[ "$VERSION" =~ ^[0-9]+(\.[0-9]+){1,2}([.-][A-Za-z0-9]+)?$ ]]; then
   exit 1
 fi
 
-# Ensure git working tree is clean, but ignore release artifacts that can be touched by this script.
-DIRTY_FILTER='^[ MARC?DU]{1,2} (RELEASE_VERSION|releases/.*\.zip)$'
+# Ensure git working tree is clean, but ignore generated release/runtime artifacts.
+DIRTY_FILTER='^[ MARC?DU]{1,2} (RELEASE_VERSION|releases/.*\.zip|packages/.*|public/packages/.*)$'
 if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
-  DIRTY_FILTER='^[ MARC?DU]{1,2} (RELEASE_VERSION|releases/.*\.zip|data/config\.php|api\.config\.php|joyee-bridge\.config\.php)$'
+  DIRTY_FILTER='^[ MARC?DU]{1,2} (RELEASE_VERSION|releases/.*\.zip|packages/.*|public/packages/.*|data/config\.php|api\.config\.php|joyee-bridge\.config\.php)$'
 fi
 DIRTY_STATUS="$(git status --porcelain | grep -vE "$DIRTY_FILTER" || true)"
 if [[ -n "$DIRTY_STATUS" ]]; then
@@ -176,6 +176,15 @@ if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
   done
 fi
 
+# Include runtime dependency trees when available.
+if [[ -d "$ROOT_DIR/packages" ]]; then
+  find "$ROOT_DIR/packages" -type f | sed "s#^$ROOT_DIR/##" >> "$TMP_LIST"
+fi
+
+if [[ -d "$ROOT_DIR/public/packages" ]]; then
+  find "$ROOT_DIR/public/packages" -type f | sed "s#^$ROOT_DIR/##" >> "$TMP_LIST"
+fi
+
 # Do not ship runtime data except the .htaccess protection file.
 # When requested, keep data/config.php as well.
 if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
@@ -184,6 +193,9 @@ else
   awk '!(index($0, "data/") == 1 && $0 != "data/.htaccess")' "$TMP_LIST" > "$TMP_LIST.filtered"
 fi
 mv "$TMP_LIST.filtered" "$TMP_LIST"
+
+# De-duplicate file list after appending generated artifacts.
+sort -u "$TMP_LIST" -o "$TMP_LIST"
 
 if [[ ! -s "$TMP_LIST" ]]; then
   echo "Error: no tracked files found to package." >&2
