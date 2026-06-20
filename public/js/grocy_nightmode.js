@@ -1,9 +1,68 @@
 ﻿
+$nightModeThemeStylesheets = {
+	"clean-modern": U("/css/grocy_night_mode_clean_modern.css"),
+	"calm-premium": U("/css/grocy_night_mode_calm_premium.css")
+};
+
+function GetNightModeTheme()
+{
+	var theme = Grocy.UserSettings.night_mode_theme;
+
+	if (theme !== "forest-organic" && theme !== "clean-modern" && theme !== "calm-premium")
+	{
+		theme = "forest-organic";
+	}
+
+	return theme;
+}
+
+function ApplyNightModeTheme()
+{
+	var selectedTheme = GetNightModeTheme();
+	Grocy.UserSettings.night_mode_theme = selectedTheme;
+
+	if (!BoolVal(Grocy.UserSettings.night_mode_enabled_internal))
+	{
+		$("#night-mode-theme-stylesheet").remove();
+		return;
+	}
+
+	var customThemeStylesheet = $nightModeThemeStylesheets[selectedTheme];
+
+	if (!customThemeStylesheet)
+	{
+		$("#night-mode-theme-stylesheet").remove();
+		return;
+	}
+
+	if (!$("#night-mode-theme-stylesheet").length)
+	{
+		$("<link>")
+			.appendTo("head")
+			.attr({
+				id: "night-mode-theme-stylesheet",
+				rel: "stylesheet",
+				href: customThemeStylesheet
+			});
+	}
+	else
+	{
+		$("#night-mode-theme-stylesheet").attr("href", customThemeStylesheet);
+	}
+}
+
 $("input.user-setting-control:radio[name=night-mode]").on("change", function()
 {
 	Grocy.UserSettings.night_mode = $("input.user-setting-control:radio[name=night-mode]:checked").val();
 	Grocy.FrontendHelpers.SaveUserSetting("night_mode", Grocy.UserSettings.night_mode, true);
 	CheckNightMode();
+});
+
+$("input.user-setting-control:radio[name=night-mode-theme]").on("change", function()
+{
+	Grocy.UserSettings.night_mode_theme = $("input.user-setting-control:radio[name=night-mode-theme]:checked").val();
+	Grocy.FrontendHelpers.SaveUserSetting("night_mode_theme", Grocy.UserSettings.night_mode_theme, true);
+	ApplyNightModeTheme();
 });
 
 $("#auto-night-mode-enabled").on("change", function()
@@ -115,16 +174,24 @@ function CheckNightMode()
 		}
 
 		$("body").addClass("night-mode");
+		ApplyNightModeTheme();
 	}
 	else
 	{
 		$("body").removeClass("night-mode");
+		$("#night-mode-theme-stylesheet").remove();
 	}
 }
 
 if (Grocy.UserId !== -1)
 {
+	if (!Grocy.UserSettings.night_mode_theme)
+	{
+		Grocy.UserSettings.night_mode_theme = "forest-organic";
+	}
+
 	$("input.user-setting-control:radio[name=night-mode][value=" + Grocy.UserSettings.night_mode + "]").prop("checked", true);
+	$("input.user-setting-control:radio[name=night-mode-theme][value='" + GetNightModeTheme() + "']").prop("checked", true);
 	$("#auto-night-mode-enabled").prop("checked", BoolVal(Grocy.UserSettings.auto_night_mode_enabled));
 	$("#auto-night-mode-time-range-goes-over-midgnight").prop("checked", BoolVal(Grocy.UserSettings.auto_night_mode_time_range_goes_over_midnight));
 	$("#auto-night-mode-enabled").trigger("change");

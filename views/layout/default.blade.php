@@ -87,6 +87,24 @@
 	<link id="night-mode-stylesheet"
 		href="{{ $U('/css/grocy_night_mode.css?v=', true) }}{{ $version }}"
 		rel="stylesheet">
+	@php
+		$nightModeTheme = $userSettings['night_mode_theme'] ?? 'forest-organic';
+		$nightModeThemeStylesheet = null;
+
+		if ($nightModeTheme === 'clean-modern')
+		{
+			$nightModeThemeStylesheet = '/css/grocy_night_mode_clean_modern.css?v=';
+		}
+		elseif ($nightModeTheme === 'calm-premium')
+		{
+			$nightModeThemeStylesheet = '/css/grocy_night_mode_calm_premium.css?v=';
+		}
+	@endphp
+	@if(!empty($nightModeThemeStylesheet))
+	<link id="night-mode-theme-stylesheet"
+		href="{{ $U($nightModeThemeStylesheet, true) }}{{ $version }}"
+		rel="stylesheet">
+	@endif
 	@endif
 
 	@stack('pageStyles')
@@ -562,6 +580,42 @@
 									data-setting-key="night_mode">
 								<label class="custom-control-label"
 									for="night-mode-off">{{ $__t('Off') }}</label>
+							</div>
+							<div class="mt-1">
+								<small class="text-muted">{{ $__t('Night mode style') }}</small>
+							</div>
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input user-setting-control"
+									type="radio"
+									name="night-mode-theme"
+									id="night-mode-theme-forest-organic"
+									value="forest-organic"
+									data-setting-key="night_mode_theme">
+								<label class="custom-control-label"
+									for="night-mode-theme-forest-organic">{{ $__t('Forest organic') }}</label>
+								<div class="small text-muted ml-4">{{ $__t('Warm natural colors with green accents') }}</div>
+							</div>
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input user-setting-control"
+									type="radio"
+									name="night-mode-theme"
+									id="night-mode-theme-clean-modern"
+									value="clean-modern"
+									data-setting-key="night_mode_theme">
+								<label class="custom-control-label"
+									for="night-mode-theme-clean-modern">{{ $__t('Clean modern') }}</label>
+								<div class="small text-muted ml-4">{{ $__t('Balanced cool palette with crisp contrast') }}</div>
+							</div>
+							<div class="custom-control custom-radio">
+								<input class="custom-control-input user-setting-control"
+									type="radio"
+									name="night-mode-theme"
+									id="night-mode-theme-calm-premium"
+									value="calm-premium"
+									data-setting-key="night_mode_theme">
+								<label class="custom-control-label"
+									for="night-mode-theme-calm-premium">{{ $__t('Calm premium') }}</label>
+								<div class="small text-muted ml-4">{{ $__t('Muted earthy tones for an elegant look') }}</div>
 							</div>
 						</div>
 						<div class="dropdown-item">

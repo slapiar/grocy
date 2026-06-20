@@ -2923,3 +2923,24 @@ msgstr[0] "Balenie"
 msgstr[1] "Balenia"
 msgstr[2] "Balení"
 msgstr[3] "Balení"
+
+msgid "Night mode style"
+msgstr "Štýl nočného režimu"
+
+msgid "Forest organic"
+msgstr "Lesný organický"
+
+msgid "Clean modern"
+msgstr "Čistý moderný"
+
+msgid "Calm premium"
+msgstr "Pokojný prémiový"
+
+msgid "Warm natural colors with green accents"
+msgstr "Teplé prírodné farby so zelenými akcentmi"
+
+msgid "Balanced cool palette with crisp contrast"
+msgstr "Vyvážená chladnejšia paleta s jasným kontrastom"
+
+msgid "Muted earthy tones for an elegant look"
+msgstr "Tlmené zemité tóny pre elegantný vzhľad"
