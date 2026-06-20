@@ -155,6 +155,11 @@ trap 'rm -f "$TMP_LIST"' EXIT
 
 mkdir -p "$OUT_DIR"
 
+if [[ "$INCLUDE_LOCAL_CONFIG" == false && -f "$ROOT_DIR/data/config.php" ]]; then
+  echo "Warning: data/config.php exists locally but will NOT be included in this release." >&2
+  echo "Use --include-local-config if the ZIP should be deployable immediately after upload." >&2
+fi
+
 # Package tracked files to avoid accidental local artifacts.
 # Exclude development-only files/directories from production release bundles.
 git -C "$ROOT_DIR" ls-files \

@@ -3,13 +3,13 @@
 ## Najcastejsie pouzitie
 
 - Patch release + commit + push:
-  - `./release.sh patch --auto-push`
+  - `./release.sh patch --include-local-config --auto-push`
 - Minor release + commit + push:
-  - `./release.sh minor --auto-push`
+  - `./release.sh minor --include-local-config --auto-push`
 - Major release + commit + push:
-  - `./release.sh major --auto-push`
+  - `./release.sh major --include-local-config --auto-push`
 - Explicitna verzia + commit + push:
-  - `./release.sh 2.10.06 --auto-push`
+  - `./release.sh 2.10.06 --include-local-config --auto-push`
 
 ## Version argument
 
@@ -36,6 +36,7 @@
 - `./release.sh patch --auto-commit`
 - `./release.sh patch --auto-commit --commit-message="Release 2.10.06"`
 - `./release.sh mini --auto-push`
+- `./release.sh patch --include-local-config --auto-push`
 
 ## Pred release/deploy (runtime state)
 
