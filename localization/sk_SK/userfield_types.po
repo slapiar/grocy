@@ -35,7 +35,7 @@ msgstr "číslo-desatinné"
 
 # Number (currency)
 msgid "number-currency"
-msgstr ""
+msgstr "číslo (mena)"
 
 # Date (without time)
 msgid "date"
