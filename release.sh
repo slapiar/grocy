@@ -177,7 +177,12 @@ if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
 fi
 
 # Do not ship runtime data except the .htaccess protection file.
-awk '!(index($0, "data/") == 1 && $0 != "data/.htaccess")' "$TMP_LIST" > "$TMP_LIST.filtered"
+# When requested, keep data/config.php as well.
+if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
+  awk '!(index($0, "data/") == 1 && $0 != "data/.htaccess" && $0 != "data/config.php")' "$TMP_LIST" > "$TMP_LIST.filtered"
+else
+  awk '!(index($0, "data/") == 1 && $0 != "data/.htaccess")' "$TMP_LIST" > "$TMP_LIST.filtered"
+fi
 mv "$TMP_LIST.filtered" "$TMP_LIST"
 
 if [[ ! -s "$TMP_LIST" ]]; then
