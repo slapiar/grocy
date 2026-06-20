@@ -34,6 +34,7 @@ $app->group('', function (RouteCollectorProxy $group)
 {
 	// System routes
 	$group->get('/', [SystemController::class, 'Root'])->setName('root');
+	$group->get('/index.php', [SystemController::class, 'Root']);
 	$group->get('/about', [SystemController::class, 'About']);
 	$group->get('/manifest', [SystemController::class, 'Manifest']);
 	$group->get('/barcodescannertesting', [SystemController::class, 'BarcodeScannerTesting']);
