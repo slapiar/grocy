@@ -1,10 +1,10 @@
 ALTER TABLE products
-ADD qu_id_price INTEGER;
+ADD COLUMN IF NOT EXISTS qu_id_price INTEGER;
 
 UPDATE products
 SET qu_id_price = qu_id_purchase;
 
-CREATE TRIGGER default_qu_id_price AFTER INSERT ON products
+CREATE TRIGGER IF NOT EXISTS default_qu_id_price AFTER INSERT ON products
 BEGIN
 	UPDATE products
 	SET qu_id_price = qu_id_purchase
@@ -12,7 +12,7 @@ BEGIN
 		AND IFNULL(qu_id_price, 0) = 0;
 END;
 
-DROP VIEW products_view;
+DROP VIEW IF EXISTS products_view;
 CREATE VIEW products_view
 AS
 SELECT
@@ -35,7 +35,7 @@ LEFT JOIN quantity_unit_conversions_resolved quc_price
 	AND p.qu_id_price = quc_price.from_qu_id
 	AND p.qu_id_stock = quc_price.to_qu_id;
 
-DROP VIEW uihelper_stock_current_overview;
+DROP VIEW IF EXISTS uihelper_stock_current_overview;
 CREATE VIEW uihelper_stock_current_overview
 AS
 SELECT
@@ -118,7 +118,7 @@ LEFT JOIN products p_parent
 	ON p.parent_product_id = p_parent.id
 WHERE p.hide_on_stock_overview = 0;
 
-DROP VIEW uihelper_stock_entries;
+DROP VIEW IF EXISTS uihelper_stock_entries;
 CREATE VIEW uihelper_stock_entries
 AS
 SELECT
