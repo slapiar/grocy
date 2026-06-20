@@ -177,7 +177,7 @@ if [[ "$INCLUDE_LOCAL_CONFIG" == true ]]; then
 fi
 
 # Do not ship runtime data except the .htaccess protection file.
-grep -vE '^data/(?!\.htaccess$)' "$TMP_LIST" > "$TMP_LIST.filtered" || true
+awk '!(index($0, "data/") == 1 && $0 != "data/.htaccess")' "$TMP_LIST" > "$TMP_LIST.filtered"
 mv "$TMP_LIST.filtered" "$TMP_LIST"
 
 if [[ ! -s "$TMP_LIST" ]]; then
