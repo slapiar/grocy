@@ -1,3 +1,6 @@
+-- SQLite only: this script is for sqlite3 and is NOT compatible with MySQL/MariaDB.
+-- Do not import this file via phpMyAdmin.
+-- Grocy uses SQLite in this repository/release setup.
 -- Grocy release-ready SQLite install script
 -- Creates the full schema, views, indexes and triggers for the current release.
 -- Seeds the minimum required data for immediate use in Slovak.
