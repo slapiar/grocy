@@ -45,9 +45,9 @@ class PrerequisiteChecker
 
 	private function checkForConfigFile()
 	{
-		if (!file_exists(GROCY_DATAPATH . '/config.php'))
+		if (!file_exists(GROCY_CONFIG_FILE))
 		{
-			throw new ERequirementNotMet('config.php in data directory (' . GROCY_DATAPATH . ') not found. Have you copied config-dist.php to the data directory and renamed it to config.php?');
+			throw new ERequirementNotMet('config.php not found (checked: ' . GROCY_DATAPATH . '/config.php and ' . __DIR__ . '/../config.php). Have you copied config-dist.php and renamed it to config.php?');
 		}
 	}
 

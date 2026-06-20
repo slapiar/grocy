@@ -11,7 +11,7 @@ use Slim\Factory\AppFactory;
 require_once __DIR__ . '/packages/autoload.php';
 
 // Load config files
-require_once GROCY_DATAPATH . '/config.php';
+require_once GROCY_CONFIG_FILE;
 require_once __DIR__ . '/config-dist.php'; // For not in own config defined values we use the default ones
 
 // Error reporting definitions
@@ -50,6 +50,11 @@ catch (\Grocy\Helpers\EInvalidConfig $ex)
 }
 
 // Create data/viewcache folder if it doesn't exist
+if (!file_exists(GROCY_DATAPATH))
+{
+	mkdir(GROCY_DATAPATH, 0755, true);
+}
+
 $viewcachePath = GROCY_DATAPATH . '/viewcache';
 if (!file_exists($viewcachePath))
 {

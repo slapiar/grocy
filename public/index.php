@@ -31,6 +31,22 @@ else
 	define('GROCY_DATAPATH', $datapath);
 }
 
+$preferredConfigPath = GROCY_DATAPATH . '/config.php';
+$fallbackConfigPath = __DIR__ . '/../config.php';
+
+if (file_exists($preferredConfigPath))
+{
+	define('GROCY_CONFIG_FILE', $preferredConfigPath);
+}
+elseif (file_exists($fallbackConfigPath))
+{
+	define('GROCY_CONFIG_FILE', $fallbackConfigPath);
+}
+else
+{
+	define('GROCY_CONFIG_FILE', $preferredConfigPath);
+}
+
 require_once __DIR__ . '/../helpers/PrerequisiteChecker.php';
 
 try
